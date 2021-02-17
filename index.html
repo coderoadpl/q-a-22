@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <meta
+    http-equiv="X-UA-Compatible"
+    content="ie=edge"
+  />
+  <title>Static Template</title>
+
+  <style>
+    .square {
+      width: 100px;
+      height: 100px;
+      background-color: red;
+      position: fixed;
+      left: 0px;
+      top: 0px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="square"></div>
+
+  <form>
+    <label for="number">
+      Podaj Datę
+    </label>
+    <input
+      type="date"
+      id="date"
+      class="date"
+      required
+      autofocus
+    />
+  </form>
+
+  <div class="img">
+
+  </div>
+
+  <script src="./lib.js"></script>
+  <script>
+    (() => {
+      const square = document.querySelector(".square")
+
+      addHoverToElement(square, (element) => {
+        animateRight(element)
+        animateTop(element)
+      })
+    })()
+  </script>
+
+  <script>
+    const dateInput = document.querySelector(".date")
+    const imageContainer = document.querySelector(".img")
+
+    const addImage = (src, container) => {
+      const img = document.createElement("img")
+      img.src = src
+      container.innerHTML = ''
+      container.appendChild(img)
+    }
+
+    dateInput.addEventListener(
+      'change',
+      (e) => {
+        const birthday = new Date(e.target.value)
+        const now = new Date()
+
+        if (birthday.getMonth() === now.getMonth()) {
+          console.log('Birthday in this month')
+          addImage(
+            'data:image/png;base64,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',
+            imageContainer
+          )
+        } else {
+          console.log('Birthday NOT in this month')
+          addImage(
+            'https://img.flaticon.com/icons/png/512/42/42901.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF',
+            imageContainer
+          )
+        }
+      }
+    )
+  </script>
+</body>
+
+</html>
